@@ -64,6 +64,10 @@ async def info(interaction: nextcord.Interaction):
 
 @bot.event
 async def on_message(message: nextcord.Message):
+    """
+    When a message is sent, check if it is a reply to the bot's message.
+    If so, validate the guess and update the bot's message.
+    """
     # get the message replied to
     ref = message.reference
     if not ref or not isinstance(ref.resolved, nextcord.Message):

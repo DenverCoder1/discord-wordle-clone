@@ -92,33 +92,21 @@ EMOJI_CODES = {
 }
 
 
-def generate_blanks() -> str:
-    """Return a string of 5 blank emoji characters"""
-    return "\N{WHITE MEDIUM SQUARE}" * 5
-
-
-def generate_puzzle_embed(user: nextcord.User, puzzle_id: int) -> nextcord.Embed:
-    embed = nextcord.Embed(title="Wordle Clone")
-    embed.description = "\n".join([generate_blanks()] * 6)
-    embed.set_author(name=user.name, icon_url=user.display_avatar.url)
-    embed.set_footer(
-        text=f"ID: {puzzle_id} ︱ To play, use the command /play!\n"
-        "To guess, reply to this message with a word."
-    )
-    return embed
-
-
-def is_valid_word(word: str) -> bool:
-    """check if this is a valid word"""
-    return word.lower() in all_words
-
-
-def random_puzzle_id() -> int:
-    return random.randint(0, len(popular_words) - 1)
-
-
 def generate_colored_word(guess: str, answer: str) -> str:
-    """Return a string of emojis with the letters colored"""
+    """
+    Builds a string of emoji codes where each letter is
+    colored based on the key:
+    - Same letter, same place: Green
+    - Same letter, different place: Yellow
+    - Different letter: Gray
+
+    Args:
+        word (str): The word to be colored
+        answer (str): The answer to the word
+
+    Returns:
+        str: A string of emoji codes
+    """
     colored_word = [EMOJI_CODES["gray"][letter] for letter in guess]
     guess_letters = list(guess)
     answer_letters = list(answer)
@@ -136,7 +124,49 @@ def generate_colored_word(guess: str, answer: str) -> str:
     return "".join(colored_word)
 
 
+def generate_blanks() -> str:
+    """
+    Generate a string of 5 blank white square emoji characters
+
+    Returns:
+        str: A string of white square emojis
+    """
+    return "\N{WHITE MEDIUM SQUARE}" * 5
+
+
+def generate_puzzle_embed(user: nextcord.User, puzzle_id: int) -> nextcord.Embed:
+    """
+    Generate an embed for a new puzzle given the puzzle id and user
+
+    Args:
+        user (nextcord.User): The user who submitted the puzzle
+        puzzle_id (int): The puzzle ID
+
+    Returns:
+        nextcord.Embed: The embed to be sent
+    """
+    embed = nextcord.Embed(title="Wordle Clone")
+    embed.description = "\n".join([generate_blanks()] * 6)
+    embed.set_author(name=user.name, icon_url=user.display_avatar.url)
+    embed.set_footer(
+        text=f"ID: {puzzle_id} ︱ To play, use the command /play!\n"
+        "To guess, reply to this message with a word."
+    )
+    return embed
+
+
 def update_embed(embed: nextcord.Embed, guess: str) -> nextcord.Embed:
+    """
+    Updates the embed with the new guesses
+
+    Args:
+        embed (nextcord.Embed): The embed to be updated
+        puzzle_id (int): The puzzle ID
+        guess (str): The guess made by the user
+
+    Returns:
+        nextcord.Embed: The updated embed
+    """
     puzzle_id = int(embed.footer.text.split()[1])
     answer = popular_words[puzzle_id]
     colored_word = generate_colored_word(guess, answer)
@@ -163,5 +193,37 @@ def update_embed(embed: nextcord.Embed, guess: str) -> nextcord.Embed:
     return embed
 
 
+def is_valid_word(word: str) -> bool:
+    """
+    Validates a word
+
+    Args:
+        word (str): The word to validate
+
+    Returns:
+        bool: Whether the word is valid
+    """
+    return word.lower() in all_words
+
+
+def random_puzzle_id() -> int:
+    """
+    Generates a random puzzle ID
+
+    Returns:
+        int: A random puzzle ID
+    """
+    return random.randint(0, len(popular_words) - 1)
+
+
 def is_game_over(embed: nextcord.Embed) -> bool:
+    """
+    Checks if the game is over in the embed
+
+    Args:
+        embed (nextcord.Embed): The embed to check
+
+    Returns:
+        bool: Whether the game is over
+    """
     return "\n\n" in embed.description
