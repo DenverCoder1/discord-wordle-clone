@@ -38,6 +38,27 @@ async def play(
     await interaction.send(embed=embed)
 
 
+@bot.slash_command(description="Info about Discord Wordle Clone", guild_ids=GUILD_IDS)
+async def info(interaction: nextcord.Interaction):
+    join_url = "https://discord.com/api/oauth2/authorize?client_id=938502854921027584&permissions=11264&scope=bot%20applications.commands"
+    discord_url = "https://discord.gg/fPrdqh3Zfu"
+    youtube_url = "https://www.youtube.com/c/DevProTips"
+    github_url = "https://github.com/DenverCoder1/discord-wordle-clone"
+    embed = nextcord.Embed(
+        title="About Discord Wordle Clone",
+        description=(
+            "Discord Wordle Clone is a game of wordle-like puzzle solving.\n"
+            "You can play it by typing `/play` or `/play <puzzle_id>`\n"
+            "You can also play a random puzzle by leaving out the puzzle ID.\n\n",
+            f"<:bot_tag:596576775555776522> [Add this bot to your server]({join_url})\n",
+            f"<:discord:891394837507604521> [Join my Discord Server]({discord_url})\n",
+            f"<:youtube:891394512197410856> [YouTube tutorial on the making of this bot]({youtube_url})\n",
+            f"<:github:819659738354417734> [View the source code on GitHub]({github_url})\n",
+        ),
+    )
+    await interaction.send(embed=embed)
+
+
 @bot.event
 async def on_message(message: nextcord.Message):
     # get the message replied to
