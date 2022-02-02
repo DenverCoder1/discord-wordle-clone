@@ -23,10 +23,15 @@ GUILD_IDS = (
 )
 
 
-@bot.slash_command(description="Play a game of wordle", guild_ids=GUILD_IDS)
-async def play(interaction: nextcord.Interaction):
+@bot.slash_command(description="Play a game of Wordle Clone", guild_ids=GUILD_IDS)
+async def play(
+    interaction: nextcord.Interaction,
+    puzzle_id: int = nextcord.SlashOption(
+        description="Puzzle ID, leave out for a random puzzle", required=False
+    ),
+):
     # generate a puzzle
-    puzzle_id = random_puzzle_id()
+    puzzle_id = puzzle_id or random_puzzle_id()
     # create the puzzle to display
     embed = generate_puzzle_embed(interaction.user, puzzle_id)
     # send the puzzle as an interaction response
