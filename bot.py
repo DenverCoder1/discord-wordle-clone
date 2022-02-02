@@ -1,16 +1,19 @@
+import logging
 import os
-from dotenv import load_dotenv
 
 import nextcord
+from dotenv import load_dotenv
 from nextcord.ext import commands
 
 from utils import (
     generate_puzzle_embed,
     is_game_over,
     is_valid_word,
-    update_embed,
     random_puzzle_id,
+    update_embed,
 )
+
+logging.basicConfig(level=logging.INFO)
 
 load_dotenv()
 
