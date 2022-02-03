@@ -52,11 +52,11 @@ async def info(interaction: nextcord.Interaction):
         description=(
             "Discord Wordle Clone is a game of wordle-like puzzle solving.\n"
             "You can play it by typing `/play` or `/play <puzzle_id>`\n"
-            "You can also play a random puzzle by leaving out the puzzle ID.\n\n",
-            f"<:bot_tag:596576775555776522> [Add this bot to your server]({join_url})\n",
-            f"<:discord:891394837507604521> [Join my Discord Server]({discord_url})\n",
-            f"<:youtube:891394512197410856> [YouTube tutorial on the making of this bot]({youtube_url})\n",
-            f"<:github:819659738354417734> [View the source code on GitHub]({github_url})\n",
+            "You can also play a random puzzle by leaving out the puzzle ID.\n\n"
+            f"<:bot_tag:596576775555776522> [Add this bot to your server]({join_url})\n"
+            f"<:discord:891394837507604521> [Join my Discord Server]({discord_url})\n"
+            f"<:youtube:891394512197410856> [YouTube tutorial on the making of this bot]({youtube_url})\n"
+            f"<:github:819659738354417734> [View the source code on GitHub]({github_url})\n"
         ),
     )
     await interaction.send(embed=embed)
