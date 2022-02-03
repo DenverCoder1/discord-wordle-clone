@@ -84,6 +84,8 @@ async def on_message(message: nextcord.Message):
 
     embed = parent.embeds[0]
 
+    guess = message.content.lower()
+
     # check that the user is the one playing
     if embed.author.name != message.author.name:
         await message.reply(
@@ -119,7 +121,7 @@ async def on_message(message: nextcord.Message):
         return
 
     # check that the word is valid
-    if not is_valid_word(message.content):
+    if not is_valid_word(guess):
         await message.reply("That is not a valid word", delete_after=5)
         try:
             await message.delete(delay=5)
@@ -128,7 +130,7 @@ async def on_message(message: nextcord.Message):
         return
 
     # update the embed
-    embed = update_embed(embed, message.content)
+    embed = update_embed(embed, guess)
     await parent.edit(embed=embed)
 
     # attempt to delete the message

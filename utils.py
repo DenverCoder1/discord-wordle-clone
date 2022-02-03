@@ -203,7 +203,7 @@ def is_valid_word(word: str) -> bool:
     Returns:
         bool: Whether the word is valid
     """
-    return word.lower() in all_words
+    return word in all_words
 
 
 def random_puzzle_id() -> int:
