@@ -17,7 +17,7 @@ logging.basicConfig(level=logging.INFO)
 
 load_dotenv()
 
-bot = commands.Bot(command_prefix=[])
+bot = commands.Bot(command_prefix=commands.when_mentioned)
 
 GUILD_IDS = (
     [int(guild_id) for guild_id in os.getenv("GUILD_IDS").split(",")]
