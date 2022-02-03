@@ -87,11 +87,14 @@ async def on_message(message: nextcord.Message):
     guess = message.content.lower()
 
     # check that the user is the one playing
-    if embed.author.name != message.author.name:
-        await message.reply(
-            f"This game was started by {embed.author.name}. Start a new game with /play",
-            delete_after=5,
-        )
+    if (
+        embed.author.name != message.author.name
+        or embed.author.icon_url != message.author.display_avatar.url
+    ):
+        reply = "Start a new game with /play"
+        if embed.author:
+            reply = f"This game was started by {embed.author.name}. " + reply
+        await message.reply(reply, delete_after=5)
         try:
             await message.delete(delay=5)
         except Exception:
