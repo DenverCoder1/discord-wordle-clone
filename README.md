@@ -17,6 +17,12 @@ Once the bot is added, you can play wordle by using the command `/play`
 
 ![wordle demo](https://i.imgur.com/t8XgQL4.gif)
 
+## Tutorial
+
+Video tutorial on how this bot was made
+
+https://www.youtube.com/watch?v=0p_eQGKFY3I
+
 ## Environment Variables
 
 The following environment variables can be specified in a `.env` file to configure the bot for self-hosting:
