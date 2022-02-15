@@ -1,2 +1,2 @@
 python-dotenv>=0.19.2,<1
-nextcord>=2.0.0a6,<3
+nextcord>=2.0.0a8,<3

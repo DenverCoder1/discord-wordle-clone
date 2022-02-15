@@ -1,4 +1,6 @@
 import random
+from typing import Optional
+
 import nextcord
 
 popular_words = open("dict-popular.txt").read().splitlines()
@@ -134,7 +136,9 @@ def generate_blanks() -> str:
     return "\N{WHITE MEDIUM SQUARE}" * 5
 
 
-def generate_puzzle_embed(user: nextcord.User, puzzle_id: int) -> nextcord.Embed:
+def generate_puzzle_embed(
+    user: nextcord.User, puzzle_id: Optional[int] = None
+) -> nextcord.Embed:
     """
     Generate an embed for a new puzzle given the puzzle id and user
 
@@ -145,6 +149,7 @@ def generate_puzzle_embed(user: nextcord.User, puzzle_id: int) -> nextcord.Embed
     Returns:
         nextcord.Embed: The embed to be sent
     """
+    puzzle_id = puzzle_id or random_puzzle_id()
     embed = nextcord.Embed(title="Wordle Clone")
     embed.description = "\n".join([generate_blanks()] * 6)
     embed.set_author(name=user.name, icon_url=user.display_avatar.url)
@@ -227,3 +232,119 @@ def is_game_over(embed: nextcord.Embed) -> bool:
         bool: Whether the game is over
     """
     return "\n\n" in embed.description
+
+
+def generate_info_embed() -> nextcord.Embed:
+    """
+    Generates an embed with information about the bot
+
+    Returns:
+        nextcord.Embed: The embed to be sent
+    """
+    join_url = "https://discord.com/api/oauth2/authorize?client_id=938502854921027584&permissions=11264&scope=bot%20applications.commands"
+    discord_url = "https://discord.gg/fPrdqh3Zfu"
+    youtube_url = "https://www.youtube.com/watch?v=0p_eQGKFY3I"
+    github_url = "https://github.com/DenverCoder1/discord-wordle-clone"
+    return nextcord.Embed(
+        title="About Discord Wordle Clone",
+        description=(
+            "Discord Wordle Clone is a game of wordle-like puzzle solving.\n"
+            "You can play it by typing `/play` or `/play <puzzle_id>`\n"
+            "You can also play a random puzzle by leaving out the puzzle ID.\n\n"
+            f"<:member_join:942985122846752798> [Add this bot to your server]({join_url})\n"
+            f"<:discord:942984508586725417> [Join my Discord server]({discord_url})\n"
+            f"<:youtube:942984508976795669> [YouTube tutorial on the making of this bot]({youtube_url})\n"
+            f"<:github:942984509673066568> [View the source code on GitHub]({github_url})\n"
+        ),
+    )
+
+
+async def process_message_as_guess(
+    bot: nextcord.Client, message: nextcord.Message
+) -> bool:
+    """
+    Check if a new message is a reply to a Wordle game.
+    If so, validate the guess and update the bot's message.
+
+    Args:
+        bot (nextcord.Client): The bot
+        message (nextcord.Message): The new message to process
+
+    Returns:
+        bool: True if the message was processed as a guess, False otherwise
+    """
+    # get the message replied to
+    ref = message.reference
+    if not ref or not isinstance(ref.resolved, nextcord.Message):
+        return False
+    parent = ref.resolved
+
+    # if the parent message is not the bot's message, ignore it
+    if parent.author.id != bot.user.id:
+        return False
+
+    # check that the message has embeds
+    if not parent.embeds:
+        return False
+
+    embed = parent.embeds[0]
+
+    guess = message.content.lower()
+
+    # check that the user is the one playing
+    if (
+        embed.author.name != message.author.name
+        or embed.author.icon_url != message.author.display_avatar.url
+    ):
+        reply = "Start a new game with /play"
+        if embed.author:
+            reply = f"This game was started by {embed.author.name}. " + reply
+        await message.reply(reply, delete_after=5)
+        try:
+            await message.delete(delay=5)
+        except Exception:
+            pass
+        return True
+
+    # check that the game is not over
+    if is_game_over(embed):
+        await message.reply(
+            "The game is already over. Start a new game with /play", delete_after=5
+        )
+        try:
+            await message.delete(delay=5)
+        except Exception:
+            pass
+        return True
+
+    # check that a single word is in the message
+    if len(message.content.split()) > 1:
+        await message.reply(
+            "Please respond with a single 5-letter word.", delete_after=5
+        )
+        try:
+            await message.delete(delay=5)
+        except Exception:
+            pass
+        return True
+
+    # check that the word is valid
+    if not is_valid_word(guess):
+        await message.reply("That is not a valid word", delete_after=5)
+        try:
+            await message.delete(delay=5)
+        except Exception:
+            pass
+        return True
+
+    # update the embed
+    embed = update_embed(embed, guess)
+    await parent.edit(embed=embed)
+
+    # attempt to delete the message
+    try:
+        await message.delete()
+    except Exception:
+        pass
+
+    return True
