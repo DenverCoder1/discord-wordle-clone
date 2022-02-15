@@ -14,7 +14,7 @@ load_dotenv()
 
 activity = nextcord.Activity(type=nextcord.ActivityType.listening, name="/play")
 
-bot = commands.Bot(command_prefix="w?", activity=activity)
+bot = commands.Bot(command_prefix=commands.when_mentioned_or("w?"), activity=activity)
 
 GUILD_IDS = (
     [int(guild_id) for guild_id in os.getenv("GUILD_IDS").split(",")]
