@@ -1,5 +1,5 @@
+import datetime
 import random
-from typing import Optional
 
 import nextcord
 
@@ -136,9 +136,7 @@ def generate_blanks() -> str:
     return "\N{WHITE MEDIUM SQUARE}" * 5
 
 
-def generate_puzzle_embed(
-    user: nextcord.User, puzzle_id: Optional[int] = None
-) -> nextcord.Embed:
+def generate_puzzle_embed(user: nextcord.User, puzzle_id: int) -> nextcord.Embed:
     """
     Generate an embed for a new puzzle given the puzzle id and user
 
@@ -149,7 +147,6 @@ def generate_puzzle_embed(
     Returns:
         nextcord.Embed: The embed to be sent
     """
-    puzzle_id = puzzle_id or random_puzzle_id()
     embed = nextcord.Embed(title="Wordle Clone")
     embed.description = "\n".join([generate_blanks()] * 6)
     embed.set_author(name=user.name, icon_url=user.display_avatar.url)
@@ -219,6 +216,19 @@ def random_puzzle_id() -> int:
         int: A random puzzle ID
     """
     return random.randint(0, len(popular_words) - 1)
+
+
+def daily_puzzle_id() -> int:
+    """
+    Calculates the puzzle ID for the daily puzzle
+
+    Returns:
+        int: The puzzle ID for the daily puzzle
+    """
+    # calculate days since 1/1/2022 and mod by the number of puzzles
+    num_words = len(popular_words)
+    time_diff = datetime.datetime.now().date() - datetime.date(2022, 1, 1)
+    return time_diff.days % num_words
 
 
 def is_game_over(embed: nextcord.Embed) -> bool:
