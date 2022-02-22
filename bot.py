@@ -42,9 +42,7 @@ async def slash_play(interaction: nextcord.Interaction):
 
 @slash_play.subcommand(name="random", description="Play a random game of Wordle Clone")
 async def slash_play_random(interaction: nextcord.Interaction):
-    # generate puzzle embed
     embed = generate_puzzle_embed(interaction.user, random_puzzle_id())
-    # send the puzzle as an interaction response
     await interaction.send(embed=embed)
 
 
@@ -53,17 +51,13 @@ async def slash_play_id(
     interaction: nextcord.Interaction,
     puzzle_id: int = nextcord.SlashOption(description="Puzzle ID of the word to guess"),
 ):
-    # generate puzzle embed
     embed = generate_puzzle_embed(interaction.user, puzzle_id)
-    # send the puzzle as an interaction response
     await interaction.send(embed=embed)
 
 
 @slash_play.subcommand(name="daily", description="Play the daily game of Wordle Clone")
 async def slash_play_daily(interaction: nextcord.Interaction):
-    # generate puzzle embed
     embed = generate_puzzle_embed(interaction.user, daily_puzzle_id())
-    # send the puzzle as an interaction response
     await interaction.send(embed=embed)
 
 
