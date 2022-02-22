@@ -67,7 +67,7 @@ async def play_slash_id(interaction: nextcord.Interaction):
     await interaction.send(embed=embed)
 
 
-@bot.slash_command(description="Info about Discord Wordle Clone", guild_ids=GUILD_IDS)
+@bot.slash_command(name="info", description="Wordle Clone Info", guild_ids=GUILD_IDS)
 async def info_slash(interaction: nextcord.Interaction):
     await interaction.send(embed=generate_info_embed())
 
