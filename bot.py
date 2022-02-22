@@ -60,7 +60,7 @@ async def slash_play_id(
 
 
 @slash_play.subcommand(name="daily", description="Play the daily game of Wordle Clone")
-async def slash_play_id(interaction: nextcord.Interaction):
+async def slash_play_daily(interaction: nextcord.Interaction):
     # generate puzzle embed
     embed = generate_puzzle_embed(interaction.user, daily_puzzle_id())
     # send the puzzle as an interaction response
