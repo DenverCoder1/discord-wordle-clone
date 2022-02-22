@@ -6,7 +6,13 @@ import nextcord
 from dotenv import load_dotenv
 from nextcord.ext import commands
 
-from utils import generate_info_embed, generate_puzzle_embed, process_message_as_guess
+from utils import (
+    daily_puzzle_id,
+    generate_info_embed,
+    generate_puzzle_embed,
+    process_message_as_guess,
+    random_puzzle_id,
+)
 
 logging.basicConfig(level=logging.INFO)
 
@@ -28,29 +34,64 @@ async def on_ready():
     print(f"Logged in as {bot.user}")
 
 
-@bot.slash_command(description="Play a game of Wordle Clone", guild_ids=GUILD_IDS)
-async def play(
-    interaction: nextcord.Interaction,
-    puzzle_id: int = nextcord.SlashOption(
-        description="Puzzle ID, leave out for a random puzzle", required=False
-    ),
-):
-    # generate puzzle embed
-    embed = generate_puzzle_embed(interaction.user, puzzle_id)
-    # send the puzzle as an interaction response
+@bot.slash_command(name="play", description="Play Wordle Clone", guild_ids=GUILD_IDS)
+async def slash_play(interaction: nextcord.Interaction):
+    """This command has subcommands for playing a game of Wordle Clone."""
+    pass
+
+
+@slash_play.subcommand(name="random", description="Play a random game of Wordle Clone")
+async def slash_play_random(interaction: nextcord.Interaction):
+    embed = generate_puzzle_embed(interaction.user, random_puzzle_id())
     await interaction.send(embed=embed)
 
 
-@bot.command()
+@slash_play.subcommand(name="id", description="Play a game of Wordle Clone by its ID")
+async def slash_play_id(
+    interaction: nextcord.Interaction,
+    puzzle_id: int = nextcord.SlashOption(description="Puzzle ID of the word to guess"),
+):
+    embed = generate_puzzle_embed(interaction.user, puzzle_id)
+    await interaction.send(embed=embed)
+
+
+@slash_play.subcommand(name="daily", description="Play the daily game of Wordle Clone")
+async def slash_play_daily(interaction: nextcord.Interaction):
+    embed = generate_puzzle_embed(interaction.user, daily_puzzle_id())
+    await interaction.send(embed=embed)
+
+
+@bot.slash_command(name="info", description="Wordle Clone Info", guild_ids=GUILD_IDS)
+async def slash_info(interaction: nextcord.Interaction):
+    await interaction.send(embed=generate_info_embed())
+
+
+@bot.group(invoke_without_command=True)
 async def play(ctx: commands.Context, puzzle_id: Optional[int] = None):
     """Play a game of Wordle Clone"""
+    embed = generate_puzzle_embed(ctx.author, puzzle_id or random_puzzle_id())
+    await ctx.reply(embed=embed, mention_author=False)
+
+
+@play.command(name="random")
+async def play_random(ctx: commands.Context):
+    """Play a random game of Wordle Clone"""
+    embed = generate_puzzle_embed(ctx.author, random_puzzle_id())
+    await ctx.reply(embed=embed, mention_author=False)
+
+
+@play.command(name="id")
+async def play_id(ctx: commands.Context, puzzle_id: int):
+    """Play a game of Wordle Clone by its ID"""
     embed = generate_puzzle_embed(ctx.author, puzzle_id)
     await ctx.reply(embed=embed, mention_author=False)
 
 
-@bot.slash_command(description="Info about Discord Wordle Clone", guild_ids=GUILD_IDS)
-async def info(interaction: nextcord.Interaction):
-    await interaction.send(embed=generate_info_embed())
+@play.command(name="daily")
+async def play_daily(ctx: commands.Context):
+    """Play the daily game of Wordle Clone"""
+    embed = generate_puzzle_embed(ctx.author, daily_puzzle_id())
+    await ctx.reply(embed=embed, mention_author=False)
 
 
 @bot.command()
