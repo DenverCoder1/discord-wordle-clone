@@ -258,9 +258,11 @@ def generate_info_embed() -> nextcord.Embed:
     return nextcord.Embed(
         title="About Discord Wordle Clone",
         description=(
-            "Discord Wordle Clone is a game of wordle-like puzzle solving.\n"
-            "You can play it by typing `/play` or `/play <puzzle_id>`\n"
-            "You can also play a random puzzle by leaving out the puzzle ID.\n\n"
+            "Discord Wordle Clone is a game of wordle-like puzzle solving.\n\n"
+            "**You can start a game with**\n\n"
+            ":sunny: `/play daily` - Play the puzzle of the day\n"
+            ":game_die: `/play random` - Play a random puzzle\n"
+            ":boxing_glove: `/play id <puzzle_id>` - Play a puzzle by ID\n\n"
             f"<:member_join:942985122846752798> [Add this bot to your server]({join_url})\n"
             f"<:discord:942984508586725417> [Join my Discord server]({discord_url})\n"
             f"<:youtube:942984508976795669> [YouTube tutorial on the making of this bot]({youtube_url})\n"

@@ -35,21 +35,21 @@ async def on_ready():
 
 
 @bot.slash_command(name="play", description="Play Wordle Clone", guild_ids=GUILD_IDS)
-async def play_slash(interaction: nextcord.Interaction):
+async def slash_play(interaction: nextcord.Interaction):
     """This command has subcommands for playing a game of Wordle Clone."""
     pass
 
 
-@play_slash.subcommand(name="random", description="Play a random game of Wordle Clone")
-async def play_slash_random(interaction: nextcord.Interaction):
+@slash_play.subcommand(name="random", description="Play a random game of Wordle Clone")
+async def slash_play_random(interaction: nextcord.Interaction):
     # generate puzzle embed
     embed = generate_puzzle_embed(interaction.user, random_puzzle_id())
     # send the puzzle as an interaction response
     await interaction.send(embed=embed)
 
 
-@play_slash.subcommand(name="id", description="Play a game of Wordle Clone by its ID")
-async def play_slash_id(
+@slash_play.subcommand(name="id", description="Play a game of Wordle Clone by its ID")
+async def slash_play_id(
     interaction: nextcord.Interaction,
     puzzle_id: int = nextcord.SlashOption(description="Puzzle ID of the word to guess"),
 ):
@@ -59,8 +59,8 @@ async def play_slash_id(
     await interaction.send(embed=embed)
 
 
-@play_slash.subcommand(name="daily", description="Play the daily game of Wordle Clone")
-async def play_slash_id(interaction: nextcord.Interaction):
+@slash_play.subcommand(name="daily", description="Play the daily game of Wordle Clone")
+async def slash_play_id(interaction: nextcord.Interaction):
     # generate puzzle embed
     embed = generate_puzzle_embed(interaction.user, daily_puzzle_id())
     # send the puzzle as an interaction response
@@ -68,7 +68,7 @@ async def play_slash_id(interaction: nextcord.Interaction):
 
 
 @bot.slash_command(name="info", description="Wordle Clone Info", guild_ids=GUILD_IDS)
-async def info_slash(interaction: nextcord.Interaction):
+async def slash_info(interaction: nextcord.Interaction):
     await interaction.send(embed=generate_info_embed())
 
 
