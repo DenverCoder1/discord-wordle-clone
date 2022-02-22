@@ -73,20 +73,23 @@ async def play(ctx: commands.Context, puzzle_id: Optional[int] = None):
     await ctx.reply(embed=embed, mention_author=False)
 
 
-@play.command(name="random", description="Play a random game of Wordle Clone")
+@play.command(name="random")
 async def play_random(ctx: commands.Context):
+    """Play a random game of Wordle Clone"""
     embed = generate_puzzle_embed(ctx.author, random_puzzle_id())
     await ctx.reply(embed=embed, mention_author=False)
 
 
-@play.command(name="id", description="Play a game of Wordle Clone by its ID")
+@play.command(name="id")
 async def play_id(ctx: commands.Context, puzzle_id: int):
+    """Play a game of Wordle Clone by its ID"""
     embed = generate_puzzle_embed(ctx.author, puzzle_id)
     await ctx.reply(embed=embed, mention_author=False)
 
 
-@play.command(name="daily", description="Play the daily game of Wordle Clone")
+@play.command(name="daily")
 async def play_daily(ctx: commands.Context):
+    """Play the daily game of Wordle Clone"""
     embed = generate_puzzle_embed(ctx.author, daily_puzzle_id())
     await ctx.reply(embed=embed, mention_author=False)
 
