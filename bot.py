@@ -67,8 +67,6 @@ async def slash_play_id(interaction: nextcord.Interaction, puzzle_id: int):
     """
     embed = generate_puzzle_embed(interaction.user, puzzle_id)
     await interaction.send(embed=embed)
-    embed = generate_puzzle_embed(interaction.user, puzzle_id)
-    await interaction.send(embed=embed)
 
 
 @slash_play.subcommand(name="daily")
