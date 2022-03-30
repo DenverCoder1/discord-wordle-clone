@@ -98,6 +98,7 @@ def generate_colored_word(guess: str, answer: str) -> str:
     """
     Builds a string of emoji codes where each letter is
     colored based on the key:
+    
     - Same letter, same place: Green
     - Same letter, different place: Yellow
     - Different letter: Gray
