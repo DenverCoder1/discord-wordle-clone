@@ -1,5 +1,6 @@
 import logging
 import os
+from typing import Optional
 
 import nextcord
 from dotenv import load_dotenv
@@ -81,6 +82,40 @@ async def slash_play_daily(interaction: nextcord.Interaction):
 async def slash_info(interaction: nextcord.Interaction):
     """Info about the Wordle Clone bot"""
     await interaction.send(embed=generate_info_embed())
+
+
+@bot.group(invoke_without_command=True)
+async def play(ctx: commands.Context, puzzle_id: Optional[int] = None):
+    """Play a game of Wordle Clone"""
+    embed = generate_puzzle_embed(ctx.author, puzzle_id or random_puzzle_id())
+    await ctx.reply(embed=embed, mention_author=False)
+
+
+@play.command(name="random")
+async def play_random(ctx: commands.Context):
+    """Play a random game of Wordle Clone"""
+    embed = generate_puzzle_embed(ctx.author, random_puzzle_id())
+    await ctx.reply(embed=embed, mention_author=False)
+
+
+@play.command(name="id")
+async def play_id(ctx: commands.Context, puzzle_id: int):
+    """Play a game of Wordle Clone by its ID"""
+    embed = generate_puzzle_embed(ctx.author, puzzle_id)
+    await ctx.reply(embed=embed, mention_author=False)
+
+
+@play.command(name="daily")
+async def play_daily(ctx: commands.Context):
+    """Play the daily game of Wordle Clone"""
+    embed = generate_puzzle_embed(ctx.author, daily_puzzle_id())
+    await ctx.reply(embed=embed, mention_author=False)
+
+
+@bot.command()
+async def info(ctx: commands.Context):
+    """Info about Discord Wordle Clone"""
+    await ctx.reply(embed=generate_info_embed(), mention_author=False)
 
 
 bot.run(os.getenv("TOKEN"))
