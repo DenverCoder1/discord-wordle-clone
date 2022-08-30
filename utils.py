@@ -1,5 +1,7 @@
 import datetime
 import random
+import re
+from typing import List, Optional
 
 import nextcord
 
@@ -98,6 +100,7 @@ def generate_colored_word(guess: str, answer: str) -> str:
     """
     Builds a string of emoji codes where each letter is
     colored based on the key:
+
     - Same letter, same place: Green
     - Same letter, different place: Yellow
     - Different letter: Gray
@@ -110,8 +113,8 @@ def generate_colored_word(guess: str, answer: str) -> str:
         str: A string of emoji codes
     """
     colored_word = [EMOJI_CODES["gray"][letter] for letter in guess]
-    guess_letters = list(guess)
-    answer_letters = list(answer)
+    guess_letters: List[Optional[str]] = list(guess)
+    answer_letters: List[Optional[str]] = list(answer)
     # change colors to green if same letter and same place
     for i in range(len(guess_letters)):
         if guess_letters[i] == answer_letters[i]:
@@ -271,9 +274,7 @@ def generate_info_embed() -> nextcord.Embed:
     )
 
 
-async def process_message_as_guess(
-    bot: nextcord.Client, message: nextcord.Message
-) -> bool:
+async def process_message_as_guess(bot: nextcord.Client, message: nextcord.Message) -> bool:
     """
     Check if a new message is a reply to a Wordle game.
     If so, validate the guess and update the bot's message.
@@ -320,20 +321,32 @@ async def process_message_as_guess(
 
     # check that the game is not over
     if is_game_over(embed):
-        await message.reply(
-            "The game is already over. Start a new game with /play", delete_after=5
-        )
+        await message.reply("The game is already over. Start a new game with /play", delete_after=5)
         try:
             await message.delete(delay=5)
         except Exception:
             pass
         return True
 
-    # check that a single word is in the message
-    if len(message.content.split()) > 1:
+    # strip mentions from the guess
+    guess = re.sub(r"<@!?\d+>", "", guess).strip()
+
+    if len(guess) == 0:
         await message.reply(
-            "Please respond with a single 5-letter word.", delete_after=5
+            "I am unable to see what you are trying to guess.\n"
+            "Please try mentioning me before the word you want to guess.\n"
+            f"**For example:**\n{bot.user.mention} crate",
+            delete_after=10,
         )
+        try:
+            await message.delete(delay=10)
+        except Exception:
+            pass
+        return True
+
+    # check that a single word is in the message
+    if len(guess.split()) > 1:
+        await message.reply("Please respond with a single 5-letter word.", delete_after=5)
         try:
             await message.delete(delay=5)
         except Exception:
