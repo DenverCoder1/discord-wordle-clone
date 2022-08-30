@@ -331,11 +331,14 @@ async def process_message_as_guess(bot: nextcord.Client, message: nextcord.Messa
     # strip mentions from the guess
     guess = re.sub(r"<@!?\d+>", "", guess).strip()
 
+    bot_name = message.guild.me.nick if message.guild and message.guild.me.nick else bot.user.name
+
     if len(guess) == 0:
         await message.reply(
             "I am unable to see what you are trying to guess.\n"
-            "Please try mentioning me before the word you want to guess.\n"
-            f"**For example:**\n{bot.user.mention} crate",
+            "Please try mentioning me before the word you want to guess.\n\n"
+            f"**For example:**\n{bot.user.mention} crate\n\n"
+            f"To bypass this restriction, you can start a game with `@\u200b{bot_name} play` instead of `/play`",
             delete_after=10,
         )
         try:
