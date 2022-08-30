@@ -336,13 +336,13 @@ async def process_message_as_guess(bot: nextcord.Client, message: nextcord.Messa
     if len(guess) == 0:
         await message.reply(
             "I am unable to see what you are trying to guess.\n"
-            "Please try mentioning me before the word you want to guess.\n\n"
+            "Please try mentioning me in your reply before the word you want to guess.\n\n"
             f"**For example:**\n{bot.user.mention} crate\n\n"
             f"To bypass this restriction, you can start a game with `@\u200b{bot_name} play` instead of `/play`",
-            delete_after=10,
+            delete_after=14,
         )
         try:
-            await message.delete(delay=10)
+            await message.delete(delay=14)
         except Exception:
             pass
         return True
