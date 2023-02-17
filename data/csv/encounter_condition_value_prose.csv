@@ -1,0 +1,92 @@
+encounter_condition_value_id,local_language_id,name
+1,6,Während eines Schwarms
+1,9,During a swarm
+2,6,Außerhalb eines Schwarms
+2,9,Not during a swarm
+3,6,Am Morgen
+3,9,In the morning
+4,6,Am Tag
+4,9,During the day
+5,6,In der Nacht
+5,9,At night
+6,6,Durch Benutzung des Pokéradars
+6,9,Using PokéRadar
+7,6,Ohne Benutzung des Pokéradars
+7,9,Not using PokéRadar
+8,6,Kein Spiel in Slot 2
+8,9,No game in slot 2
+9,6,Rubin in Slot 2
+9,9,Ruby in slot 2
+10,6,Saphir in Slot 2
+10,9,Sapphire in slot 2
+11,6,Smaragd in Slot 2
+11,9,Emerald in slot 2
+12,6,Feuerrot in slot 2
+12,9,FireRed in slot 2
+13,6,Blattgrün in slot 2
+13,9,LeafGreen in slot 2
+14,6,Radio aus
+14,9,Radio off
+15,6,Hoenn-Sound im Radio
+15,9,Hoenn radio
+16,6,Sinnoh-Sound im Radio
+16,9,Sinnoh radio
+17,6,Im Frühling
+17,9,During Spring
+18,6,Im Sommer
+18,9,During Summer
+19,6,Im Herbst
+19,9,During Autumn
+20,6,Im Winter
+20,9,During Winter
+21,9,Bulbasaur as starter
+22,9,Squirtle as starter
+23,9,Charmander as starter
+24,9,Chespin as starter
+25,9,Fennekin as starter
+26,9,Froakie as starter
+27,9,Chose ‘Blue’ on the TV news report
+28,9,Chose ‘Red’ on the TV news report
+29,9,Awakened the legendary beasts at Burned Tower
+30,9,Visited Lake Verity after defeating Team Galactic at Mt. Coronet
+31,9,Talked to Professor Oak at Eterna City
+32,9,Visited the Pokémon Fan Club with Copycat’s doll
+33,9,Met Tornadus or Thundurus in a cutscene
+34,9,Beat the Elite 4 for the second time
+35,9,Enter the Hall of Fame
+36,9,None
+37,9,Acquired National Pokédex
+38,9,None
+39,9,Beat the Pokémon league after knocking out Snorlax at Route 11
+40,9,Playing on the Virtual Console Release
+41,9,Cure the nightmares of Eldritch’s Son
+42,9,Talk to Cynthia’s grandmother
+43,9,No item requirement
+44,9,Have Adamant Orb in bag
+45,9,Have Lustrous Orb in bag
+46,9,Have Helix Fossil in bag
+47,9,Have Dome Fossil in bag
+48,9,Have Old Amber in bag
+49,9,Have Root Fossil in bag
+50,9,Have Claw Fossil in bag
+51,9,Defeat Jupiter
+52,9,Defeat Team Galactic at Iron Island
+53,9,Input correct password
+54,9,Obtained Zephyr badge
+55,9,Defeat Red
+56,9,Received a Kanto Starter
+57,9,Received TM59 From Claire
+58,9,"Have Regirock, Regice and Registeel in the party"
+59,9,Sunday
+60,9,Monday
+61,9,Tuesday
+62,9,Wednesday
+63,9,Thursday
+64,9,Friday
+65,9,Saturday
+66,9,The first Pokémon in the player’s party has a high friendship stat
+67,9,Beat Mars for the first time
+68,9,Have Odd Keystone in bag
+69,9,Has talked to at least 32 people in the underground
+70,9,Returned Machine Part to Power Plant
+10,9,Have an Event Arceus in the party
