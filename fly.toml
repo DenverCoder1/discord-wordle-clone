@@ -1,0 +1,7 @@
+# fly.toml app configuration file generated for discord-wordle-clone on 2023-08-01T16:56:09+03:00
+#
+# See https://fly.io/docs/reference/configuration/ for information about how to use this file.
+#
+
+app = "discord-wordle-clone"
+primary_region = "den"
