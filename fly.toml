@@ -5,6 +5,10 @@
 
 app = "discord-wordle-clone"
 primary_region = "den"
-kill_signal = "SIGINT"
-kill_timeout = 5
-processes = []
+
+[[services]]
+  internal_port = 8080
+  protocol = "tcp"
+  auto_stop_machines = true
+  auto_start_machines = false
+  min_machines_running = 1
