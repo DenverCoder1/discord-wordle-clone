@@ -9,6 +9,6 @@ primary_region = "den"
 [[services]]
   internal_port = 8080
   protocol = "tcp"
-  auto_stop_machines = true
-  auto_start_machines = false
-  min_machines_running = 1
+  auto_start_machines = true
+  auto_stop_machines = false  # prevent automatic suspension
+  min_machines_running = 1  # keep a machine running at all times
