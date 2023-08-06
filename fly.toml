@@ -5,3 +5,6 @@
 
 app = "discord-wordle-clone"
 primary_region = "den"
+kill_signal = "SIGINT"
+kill_timeout = 5
+processes = []
